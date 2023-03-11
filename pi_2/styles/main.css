@@ -14,11 +14,11 @@
 }
 
 body{
-	background-color: gainsboro;
+	background-color: rgb(222, 231, 238);
 }
 
 #title{
-	font-size: 1.75rem;
+	font-size: 2rem;
 	line-height: 4,6875rem;
 	background-color: transparent;
 	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
