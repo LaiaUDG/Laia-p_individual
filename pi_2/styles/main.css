@@ -1,13 +1,24 @@
 .grid-container {
 	display: grid; 
 	grid-template-rows: auto ;
-	column-gap: 50px;
-	row-gap: 10px;
+	column-gap: 3.125rem;
+	row-gap: 0.625rem;
 }
 
+.grid-container-cards{
+	display: grid; 
+	grid-template-columns: auto auto auto auto ;
+	column-gap: 1.25rem;
+	row-gap: 0.625rem;
+	justify-content: center;
+}
+
+body{
+	background-color: gainsboro;
+}
 
 #title{
-	font-size: 1.625rem;
+	font-size: 1.75rem;
 	line-height: 4,6875rem;
 	background-color: transparent;
 	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -20,8 +31,8 @@
 	margin-right: auto;
 	width: 18.75rem;
 	height: 4.688rem;
-	font-size: 1rem;
-	background-color: rgb(20, 158, 158);
+	font-size: 1.25rem;
+	background-color:deepskyblue;
 	font-family:'Courier New';
 }
 
@@ -37,7 +48,7 @@ button.menu-object:active{
 }
 
 button.menu-object:hover:not(:active){
-	font-size: 1.375rem;
+	font-size: 1.5rem;
 	width: 20.313rem;
 	height: 5.313rem;
 	font-weight: bold;
