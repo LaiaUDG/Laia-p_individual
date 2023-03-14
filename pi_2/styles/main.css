@@ -52,5 +52,6 @@ button.menu-object:hover:not(:active){
 	width: 20.313rem;
 	height: 5.313rem;
 	font-weight: bold;
+	border-style:hidden;
 }
 
