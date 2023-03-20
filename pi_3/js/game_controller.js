@@ -4,6 +4,7 @@ const items = ["../resources/cb.png","../resources/co.png","../resources/sb.png"
 var opcions = localStorage.getItem("config") ;
 var start = false;
 var time = 1000;	
+var penalti = 20;
 var game = new Vue({
 	el: "#game_id",
 	data: {
@@ -26,9 +27,18 @@ var game = new Vue({
 		for (var i = 0; i < this.items.length; i++){
 			this.current_card.push({done: false, texture: this.items[i]});
 		}
-		if (this.dificultat === "easy") time = 3000;
-		if (this.dificultat === "hard") time = 1000;
-		if (this.dificultat === "normal") time = 2000;
+		if (this.dificultat === "easy"){
+			time = 3000;
+			penalti = 10;
+		} 
+		if (this.dificultat === "hard"){
+			time = 1000;
+			penalti = 25;
+		} 
+		if (this.dificultat === "normal"){
+			time = 2000;
+			penalti = 20;
+		} 
 		setTimeout(() => { //amb function no es podra accedir al this
 			for (var i = 0; i < this.items.length; i++){
 				Vue.set(this.current_card, i, {done: false, texture: back});
@@ -71,7 +81,7 @@ var game = new Vue({
 	},
 	computed: {
 		score_text: function(){
-			return 100 - this.bad_clicks * 20;
+			return 100 - this.bad_clicks * penalti;
 		}
 	}
 });
