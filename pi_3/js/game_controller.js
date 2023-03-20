@@ -3,7 +3,7 @@ const items = ["../resources/cb.png","../resources/co.png","../resources/sb.png"
 "../resources/so.png","../resources/tb.png","../resources/to.png"];
 var opcions = localStorage.getItem("config") ;
 var start = false;
-var time;
+var time = 1000;	
 var game = new Vue({
 	el: "#game_id",
 	data: {
@@ -12,11 +12,11 @@ var game = new Vue({
 		items: [],
 		num_cards: 2,
 		bad_clicks: 0,
-		dificultat: normal
+		dificultat: "normal"
 	},
 	created: function(){
 		this.num_cards = JSON.parse(opcions).cards
-		this.dificultat = JSON.parse(opcions).dificultat
+		this.dificultat = JSON.parse(opcions).dificulty
 		this.username = sessionStorage.getItem("username","unknown");
 		this.items = items.slice(); // Copiem l'array
 		this.items.sort(function(){return Math.random() - 0.5}); // Array aleatòria
@@ -24,14 +24,11 @@ var game = new Vue({
 		this.items = this.items.concat(this.items); // Dupliquem els elements
 		this.items.sort(function(){return Math.random() - 0.5}); // Array aleatòria
 		for (var i = 0; i < this.items.length; i++){
-			this.current_card.push({done: false, texture: items[i]});
+			this.current_card.push({done: false, texture: this.items[i]});
 		}
-		if (this.dificultat === "easy"){
-time = 1500;};
-   else if (this.dificultat === "dificult"){
-time = 500;};
-    else {
-time = 1000;};
+		if (this.dificultat === "easy") time = 3000;
+		if (this.dificultat === "hard") time = 1000;
+		if (this.dificultat === "normal") time = 2000;
 		setTimeout(() => { //amb function no es podra accedir al this
 			for (var i = 0; i < this.items.length; i++){
 				Vue.set(this.current_card, i, {done: false, texture: back});
@@ -78,8 +75,6 @@ time = 1000;};
 		}
 	}
 });
-
-
 
 
 
