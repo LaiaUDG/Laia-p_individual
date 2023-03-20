@@ -26,13 +26,18 @@ var game = new Vue({
 		for (var i = 0; i < this.items.length; i++){
 			this.current_card.push({done: false, texture: items[i]});
 		}
-		if (this.dificultat === "easy")
+		if (this.dificultat === "easy"){
+time = 1500;};
+   else if (this.dificultat === "dificult"){
+time = 500;};
+    else {
+time = 1000;};
 		setTimeout(() => { //amb function no es podra accedir al this
 			for (var i = 0; i < this.items.length; i++){
 				Vue.set(this.current_card, i, {done: false, texture: back});
 			}
 			start = true;
-		}, 1000);
+		}, time);
 	},
 	methods: {
 		clickCard: function(i){
