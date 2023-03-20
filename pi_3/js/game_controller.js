@@ -1,6 +1,7 @@
 const back = "../resources/back.png";
 const items = ["../resources/cb.png","../resources/co.png","../resources/sb.png",
 "../resources/so.png","../resources/tb.png","../resources/to.png"];
+var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
 
 var game = new Vue({
 	el: "#game_id",
@@ -8,7 +9,7 @@ var game = new Vue({
 		username:'',
 		current_card: [],
 		items: [],
-		num_cards: options.getNumOfCards(),
+		num_cards: JSON.parse(json).cards,
 		bad_clicks: 0
 	},
 	created: function(){
