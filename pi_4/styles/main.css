@@ -11,6 +11,10 @@ input[type=number]{
 	line-height: 75px;
 }
 
+#Jocs{
+	display: none;
+}
+
 .menu-object{
 	display:block;
 	margin-left: auto;
@@ -20,6 +24,13 @@ input[type=number]{
 	font-size: 16px;
 	margin-top: 10px;
 }
+
+#sub-boto{
+	width: 120px;
+	height: 75px;
+}
+
+
 
 p{
 	text-align: center;

@@ -6,6 +6,18 @@ function start_game(){
 	loadpage("./html/game.html");
 }
 
+function phaser_jocs(){
+	var x = document.getElementById("Jocs");
+	console.log(x.style.display);
+	if (x.style.display == 'block'){
+		console.log("Primer");
+		x.style.display = 'none';
+	} 
+	else {
+		x.style.display = 'block';
+	}
+}
+
 function phaser_game(){
 	loadpage("./html/phasergame.html");
 }
