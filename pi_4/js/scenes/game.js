@@ -7,6 +7,9 @@ class GameScene extends Phaser.Scene {
 		this.correct = 0;
 		this.items = []
 		this.current_card = []
+		this.time = null
+		this.penalti = null
+		this.config = JSON.parse(localStorage.getItem("config"))||{cards:2,dificulty:"hard"}
     }
 
     preload (){	
@@ -22,61 +25,90 @@ class GameScene extends Phaser.Scene {
 	
     create (){	
 		function barreja() {return Math.random()-0.5;}
-		let config = JSON.parse(localStorage.getItem("config"))
+		console.log(this.config)
+		console.log(this.config.cards)
 		let arraycards = [];
 		arraycards=this.items.slice();
 		arraycards=Phaser.Utils.Array.Shuffle(arraycards)
-		arraycards = arraycards.slice(0,config.cards);
-		console.log(config)
-		console.log(config.cards)
+		arraycards = arraycards.slice(0,this.config.cards);
 		arraycards = arraycards.concat(arraycards);
 		arraycards=Phaser.Utils.Array.Shuffle(arraycards)
 		console.log(arraycards.length)
 		for (var i = 0; i<arraycards.length; i++){
 			Phaser.Utils.Array.Add(this.current_card,{done: false, texture: 'back'});
 		}
-		var mig = 400
-		var x = mig - (config.cards * 100) + 50
-		setTimeout(()=> {
-			for (var i = 0; i<arraycards.length; i++){
-				this.add.image(x,300,arraycards[i])
-				this.cards.create(x, 300, 'back');
-				x += 100
-			}
-		},1000)
-		this.cameras.main.setBackgroundColor(0xBFFCFF);		
+		var mig = 400;
+		var x = mig - (this.config.cards * 100) + 50;
 		this.cards = this.physics.add.staticGroup();
-		i = 0;
-		this.cards.children.iterate((card)=>{
-			card.card_id = arraycards[i];
-			i++;
-			card.setInteractive();
-			card.on('pointerup', () => {
-				card.disableBody(true,true);
-				if (this.firstClick){
-					if (this.firstClick.card_id !== card.card_id){
-						this.score -= 20;
-						this.firstClick.enableBody(false, 0, 0, true, true);
-						card.enableBody(false, 0, 0, true, true);
-						if (this.score <= 0){
-							alert("Game Over");
-							loadpage("../");
+		for (var i = 0; i<arraycards.length; i++){
+			this.add.image(x,300,arraycards[i])
+			x += 100;
+		}
+		console.log(this.config.dificulty)
+		if (this.config.dificulty === "easy"){
+			this.time = 3000;
+			this.penalti = 10;
+		} 
+		if (this.config.dificulty === "hard"){
+			this.time = 1000;
+			this.penalti = 25;
+		} 
+		if (this.config.dificulty === "normal"){
+			this.time = 2000;
+			this.penalti = 20;
+		} 
+		console.log(this.time)
+		console.log(this.penalti)
+		var mostrar = false
+		setTimeout(() => {
+			x = mig - (this.config.cards * 100) + 50;
+			for (var i = 0; i<arraycards.length; i++){
+				this.cards.create(x, 300, 'back');
+				x += 100;
+			}
+			i = 0;
+			this.cards.children.iterate((card)=>{
+				card.card_id = arraycards[i];
+				i++;
+
+				card.setInteractive();
+				card.on('pointerup', () => {
+					//if
+					card.disableBody(true,true);
+					console.log()
+					if (this.firstClick && !mostrar){
+						if (this.firstClick.card_id !== card.card_id){
+							this.score -= this.penalti;
+							this.firstClick.enableBody(false, 0, 0, true, true);
+							mostrar = true
+							setTimeout(() => {
+								card.enableBody(false, 0, 0, true, true);
+								mostrar = false
+							
+							}, this.time);		
+							console.log(mostrar)
+							if (this.score <= 0){
+								alert("Game Over");
+								loadpage("../");
+							}
 						}
+						else{
+							this.correct++;
+							if (this.correct >= this.config.cards){
+								alert("You Win with " + this.score + " points.");
+								loadpage("../");
+							}
+						}
+						this.firstClick = null;
 					}
 					else{
-						this.correct++;
-						if (this.correct >= 2){
-							alert("You Win with " + this.score + " points.");
-							loadpage("../");
-						}
+						this.firstClick = card;
 					}
-					this.firstClick = null;
-				}
-				else{
-					this.firstClick = card;
-				}
-			}, card);
-		});
+				}, card);
+			});
+		}, this.time);			
+		this.cameras.main.setBackgroundColor(0xBFFCFF);		
+		
 	}
 	
 	update (){	}
