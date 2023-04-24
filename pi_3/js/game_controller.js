@@ -5,7 +5,6 @@ var opcions = localStorage.getItem("config") ;
 var start = false;
 var time = 1000;	
 var penalti = 20;
-var time = 1000;
 var game = new Vue({
 	el: "#game_id",
 	data: {
