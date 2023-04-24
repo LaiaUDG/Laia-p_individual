@@ -1,24 +1,18 @@
 const back = "../resources/back.png";
 const items = ["../resources/cb.png","../resources/co.png","../resources/sb.png",
 "../resources/so.png","../resources/tb.png","../resources/to.png"];
-var opcions = localStorage.getItem("config") ;
-var start = false;
-var time = 1000;	
-var penalti = 20;
-var time = 1000;
+var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
+
 var game = new Vue({
 	el: "#game_id",
 	data: {
 		username:'',
 		current_card: [],
 		items: [],
-		num_cards: 2,
-		bad_clicks: 0,
-		dificultat: "normal"
+		num_cards: JSON.parse(json).cards,
+		bad_clicks: 0
 	},
 	created: function(){
-		this.num_cards = JSON.parse(opcions).cards
-		this.dificultat = JSON.parse(opcions).dificulty
 		this.username = sessionStorage.getItem("username","unknown");
 		this.items = items.slice(); // Copiem l'array
 		this.items.sort(function(){return Math.random() - 0.5}); // Array aleatòria
@@ -26,27 +20,8 @@ var game = new Vue({
 		this.items = this.items.concat(this.items); // Dupliquem els elements
 		this.items.sort(function(){return Math.random() - 0.5}); // Array aleatòria
 		for (var i = 0; i < this.items.length; i++){
-			this.current_card.push({done: false, texture: this.items[i]});
+			this.current_card.push({done: false, texture: back});
 		}
-
-		if (this.dificultat === "easy"){
-			time = 3000;
-			penalti = 10;
-		} 
-		if (this.dificultat === "hard"){
-			time = 1000;
-			penalti = 25;
-		} 
-		if (this.dificultat === "normal"){
-			time = 2000;
-			penalti = 20;
-		} 
-		setTimeout(() => { //amb function no es podra accedir al this
-			for (var i = 0; i < this.items.length; i++){
-				Vue.set(this.current_card, i, {done: false, texture: back});
-			}
-			start = true;
-		}, 1000);
 	},
 	methods: {
 		clickCard: function(i){
@@ -56,7 +31,7 @@ var game = new Vue({
 	},
 	watch: {
 		current_card: function(value){
-			if (value.texture === back || !start) return;
+			if (value.texture === back) return;
 			var front = null;
 			var i_front = -1;
 			for (var i = 0; i < this.current_card.length; i++){
@@ -83,10 +58,12 @@ var game = new Vue({
 	},
 	computed: {
 		score_text: function(){
-			return 100 - this.bad_clicks * penalti;
+			return 100 - this.bad_clicks * 20;
 		}
 	}
 });
+
+
 
 
 
