@@ -67,43 +67,46 @@ class GameScene extends Phaser.Scene {
 				x += 100;
 			}
 			i = 0;
+			var anterior = null
 			this.cards.children.iterate((card)=>{
 				card.card_id = arraycards[i];
 				i++;
-
 				card.setInteractive();
 				card.on('pointerup', () => {
-					//if
-					card.disableBody(true,true);
-					console.log()
-					if (this.firstClick && !mostrar){
-						if (this.firstClick.card_id !== card.card_id){
-							this.score -= this.penalti;
-							this.firstClick.enableBody(false, 0, 0, true, true);
-							mostrar = true
-							setTimeout(() => {
-								card.enableBody(false, 0, 0, true, true);
-								mostrar = false
-							
-							}, this.time);		
-							console.log(mostrar)
-							if (this.score <= 0){
-								alert("Game Over");
-								loadpage("../");
+					if (!mostrar){
+						if (this.firstClick){
+							if (this.firstClick.card_id !== card.card_id){
+								this.score -= this.penalti;
+								mostrar = true;
+								console.log(this.firstClick);
+								anterior = this.firstClick
+								setTimeout(() => {
+									anterior.enableBody(false, 0, 0, true, true);
+									card.enableBody(false, 0, 0, true, true);
+									mostrar = false;
+								}, this.time);		
+								console.log(mostrar)
+								if (this.score <= 0){
+									alert("Game Over");
+									loadpage("../");
+								}
 							}
+							else{
+								this.correct++;
+								if (this.correct >= this.config.cards){
+									alert("You Win with " + this.score + " points.");
+									loadpage("../");
+								}
+							}
+							this.firstClick = null;
 						}
 						else{
-							this.correct++;
-							if (this.correct >= this.config.cards){
-								alert("You Win with " + this.score + " points.");
-								loadpage("../");
-							}
+							console.log("No firstClick")
+							this.firstClick = card;	
 						}
-						this.firstClick = null;
-					}
-					else{
-						this.firstClick = card;
-					}
+						card.disableBody(true,true);
+						console.log()
+					}			
 				}, card);
 			});
 		}, this.time);			
