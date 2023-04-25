@@ -1,18 +1,20 @@
 class GameScene extends Phaser.Scene {
     constructor (){
         super('GameScene');
+		this.username = '';
 		this.cards = null;
 		this.firstClick = null;
 		this.score = 100;
 		this.correct = 0;
-		this.items = []
-		this.current_card = []
-		this.time = null
-		this.penalti = null
-		this.config = JSON.parse(localStorage.getItem("config"))||{cards:2,dificulty:"hard"}
+		this.items = [];
+		this.current_card = [];
+		this.time = null;
+		this.penalti = null;
+		this.config = JSON.parse(localStorage.getItem("config"))||{cards:2,dificulty:"hard"};
     }
 
     preload (){	
+		this.username = sessionStorage.getItem("username","unknown");
 		this.load.image('back', '../resources/back.png');
 		this.load.image('cb', '../resources/cb.png');
 		this.load.image('co', '../resources/co.png');
@@ -24,7 +26,25 @@ class GameScene extends Phaser.Scene {
 	}
 	
     create (){	
+
 		function barreja() {return Math.random()-0.5;}
+		function score(){
+			
+		}
+		/*
+		function save(){
+			{
+				id = this.username;
+				var cartes = []// array.cards --> copiarem parelles de cartes 
+				for (var i = 0; i<this.cards.length; i++){
+					cartes [i] = 
+				}
+			}
+		}
+		function load(){
+
+		}
+		*/
 		console.log(this.config)
 		console.log(this.config.cards)
 		let arraycards = [];
@@ -69,7 +89,9 @@ class GameScene extends Phaser.Scene {
 			i = 0;
 			var anterior = null
 			this.cards.children.iterate((card)=>{
+				console.log(card.card_id)
 				card.card_id = arraycards[i];
+				//console.log(card.card_id)
 				i++;
 				card.setInteractive();
 				card.on('pointerup', () => {
@@ -78,8 +100,9 @@ class GameScene extends Phaser.Scene {
 							if (this.firstClick.card_id !== card.card_id){
 								this.score -= this.penalti;
 								mostrar = true;
+								console.log(this.score);
 								console.log(this.firstClick);
-								anterior = this.firstClick
+								anterior = this.firstClick;
 								setTimeout(() => {
 									anterior.enableBody(false, 0, 0, true, true);
 									card.enableBody(false, 0, 0, true, true);
@@ -92,8 +115,21 @@ class GameScene extends Phaser.Scene {
 								}
 							}
 							else{
+								console.log(this.score);
 								this.correct++;
 								if (this.correct >= this.config.cards){
+									let ranking = [];
+									if (localStorage.getItem("Ranking")){
+										console.log(ranking);
+										ranking = JSON.parse(localStorage.getItem("Ranking"));
+									}
+									const obj = {id: this.username, punts: this.score};
+									
+									//ranking.push(obj);
+									//ranking.sort(function(a,b){return b-a});
+									ranking.splice(10,1);
+									console.log(ranking);
+									localStorage.setItem("Ranking", JSON.stringify(ranking));
 									alert("You Win with " + this.score + " points.");
 									loadpage("../");
 								}

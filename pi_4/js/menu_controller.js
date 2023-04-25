@@ -8,11 +8,12 @@ function start_game(){
 
 function phaser_jocs(){
 	var x = document.getElementById("Jocs");
-	var b = document.getElementsByTagName("Inici")
+	var b = document.getElementById("Inici")
 	console.log(x.style.display);
+	console.log(b.style.display);
 	if (x.style.display == 'grid'){
 		console.log("Primer");
-		x.style.display = 'none';
+		x.style.display = "none";
 	} 
 	else {
 		x.style.display = 'grid';
@@ -21,6 +22,9 @@ function phaser_jocs(){
 }
 
 function phaser_game(){
+	name = prompt("User name");
+	
+	sessionStorage.setItem("username", name);
 	loadpage("./html/phasergame.html");
 }
 
