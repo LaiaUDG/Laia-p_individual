@@ -9,12 +9,12 @@ function start_game(){
 function phaser_jocs(){
 	var x = document.getElementById("Jocs");
 	console.log(x.style.display);
-	if (x.style.display == 'block'){
+	if (x.style.display == 'grid'){
 		console.log("Primer");
 		x.style.display = 'none';
 	} 
 	else {
-		x.style.display = 'block';
+		x.style.display = 'grid';
 	}
 }
 
