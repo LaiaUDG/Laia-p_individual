@@ -8,6 +8,7 @@ function start_game(){
 
 function phaser_jocs(){
 	var x = document.getElementById("Jocs");
+	var b = document.getElementsByTagName("Inici")
 	console.log(x.style.display);
 	if (x.style.display == 'grid'){
 		console.log("Primer");
@@ -15,6 +16,7 @@ function phaser_jocs(){
 	} 
 	else {
 		x.style.display = 'grid';
+		b.style.display = 'none';
 	}
 }
 
