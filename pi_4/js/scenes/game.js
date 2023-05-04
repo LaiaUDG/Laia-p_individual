@@ -122,12 +122,11 @@ class GameScene extends Phaser.Scene {
 									if (localStorage.getItem("Ranking")){
 										console.log(ranking);
 										ranking = JSON.parse(localStorage.getItem("Ranking"));
+										console.log(ranking);
 									}
-									const obj = {id: this.username, punts: this.score};
-									
-									//ranking.push(obj);
-									//ranking.sort(function(a,b){return b-a});
-									ranking.splice(10,1);
+									let obj = {id: this.username, punts: this.score};
+									console.log(obj);
+									ranking.push(obj);
 									console.log(ranking);
 									localStorage.setItem("Ranking", JSON.stringify(ranking));
 									alert("You Win with " + this.score + " points.");

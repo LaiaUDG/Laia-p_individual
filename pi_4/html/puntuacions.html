@@ -9,27 +9,40 @@
 		<div id="scores_id">
 			<p class="menu-object" id="title">Top Scores</p>
 			<table>
-				<tr>
-					<th>Username</th>
-					<th>Score</th>
-				</tr>
+				<thead>
+					<tr>
+						<th>Username</th>
+						<th>Score</th>
+					</tr>
+				</thead>
+				
 				<tr>
 					<script>
-					var ranking = JSON.parse(localStorage.getItem("Ranking"));
-					function CrearTaula (taula, data){
-						for (i = 0; i < 10; i++){
-							let row = taula.insertRow();
-							for (key in data[i]){
-								let cell = row.insertCell();
-								let text = document.createTextNode(ranking[i][key]);
-								cell.appendChild(text);
+						var ranking = JSON.parse(localStorage.getItem("Ranking"));
+						function compare( a, b ) {
+							if ( a.punts < b.punts ){
+							return 1;
+							}
+							if ( a.punts > b.punts ){
+							return -1;
+							}
+							return 0;
+						}
+						ranking.sort(compare);
+						function CrearTaula (taula, data){
+							for (i = 0; i < 10; i++){
+								let row = taula.insertRow();
+								for (key in ranking[i]){
+									let cell = row.insertCell();
+									let text = document.createTextNode(ranking[i][key]);
+									cell.appendChild(text);
+								}
 							}
 						}
-					}
-					console.log(ranking);
-					let table = document.querySelector("table");
-					let data = Object.keys(ranking[0]);
-					CrearTaula(table,data);
+						console.log(ranking);
+						let table = document.querySelector("table");
+						let data = Object.keys(ranking[0]);
+						CrearTaula(table,data);
 					</script>
 				</tr>
 			</div>
