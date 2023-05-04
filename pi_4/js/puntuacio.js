@@ -9,10 +9,11 @@ var puntuacions = function(){
             if(localStorage.getItem("Ranking")){
                 console.log (JSON.parse(localStorage.getItem("Ranking")));
                 arrayranking = JSON.parse(localStorage.getItem("Ranking"));
-                console.log(this.arrayranking);
+                console.log(arrayranking);
                 if (!Array.isArray(arrayranking))arrayranking=[];
             }
             this.ranking = arrayranking;
+            console.log(this.ranking);
         },
     })
     return {};
