@@ -7,19 +7,29 @@
 	</head>
 	<body>
 		<div id="options_id">
-			<p class="menu-object" id="title">Options menú</p>
+			<p class="menu-object" id="title">Options menú: Normal game</p>
 			<div class="menu-object">
 				<label for="labelnumber">Number of cards:</label>
 				<input type="number" id="labelnumber" v-model="num">
 			</div>
 			<div class="menu-object">
-				<p>Dificulty:</p>
+				<p>Dificulty normal game:</p>
 				<input type="radio" id="easy" value="easy" v-model="dificulty" checked>
 				<label for="easy">Easy</label>
 				<input type="radio" id="normal" value="normal" v-model="dificulty" >
 				<label for="normal">Normal</label>
 				<input type="radio" id="hard" value="hard" v-model="dificulty" >
 				<label for="hard">Hard</label>
+			</div>
+			<p class="menu-object" id="title">Options menú:Endless game</p>
+			<div class="menu-object">
+				<p>Start dificulty:</p>
+				<input type="radio" id="easy2" value="easy" v-model="Sdificulty" checked>
+				<label for="easy2">Easy</label>
+				<input type="radio" id="normal2" value="normal" v-model="Sdificulty" >
+				<label for="normal2">Normal</label>
+				<input type="radio" id="hard2" value="hard" v-model="Sdificulty" >
+				<label for="hard2">Hard</label>
 			</div>
 			<button class="menu-object" v-on:click="save"> Save </button>
 			<button class="menu-object" v-on:click="discard"> Discard </button>

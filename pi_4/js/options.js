@@ -3,23 +3,29 @@ var options = function(){
 	var options_data = {
 		cards:2, dificulty:"hard"
 	};
+	var options_data2 = {
+		dificulty:"normal"
+	};
 	var load = function(){
 		var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
 		options_data = JSON.parse(json);
 	};
 	var save = function(){
 		localStorage.setItem("config", JSON.stringify(options_data));
+		localStorage.setItem("config2",JSON.stringify(options_data2));
 	};
 	load();
 	var vue_instance = new Vue({
 		el: "#options_id",
 		data: {
 			num: 2,
-			dificulty: "normal"
+			dificulty: "normal",
+			Sdificulty: "normal"
 		},
 		created: function(){
 			this.num = options_data.cards;
 			this.dificulty = options_data.dificulty;
+			this.Sdificulty = options_data2.dificulty;
 		},
 		watch: {
 			num: function(value){
@@ -33,10 +39,12 @@ var options = function(){
 			discard: function(){
 				this.num = options_data.cards;
 				this.dificulty = options_data.dificulty;
+				this.Sdificulty = options_data2.dificulty;
 			},
 			save: function(){
 				options_data.cards = this.num;
 				options_data.dificulty = this.dificulty;
+				options_data2.dificulty = this.Sdificulty;
 				save();
 				loadpage("../");
 			}
@@ -46,6 +54,9 @@ var options = function(){
 		// Aquí dins hi ha la part pública de l'objecte
 		getOptionsString: function (){
 			return JSON.stringify(options_data);
+		},
+		getOptions2String: function(){
+			return JSON.stringify(options_data2);
 		},
 		getNumOfCards: function (){
 			return options_data.cards;

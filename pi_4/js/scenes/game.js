@@ -118,17 +118,6 @@ class GameScene extends Phaser.Scene {
 								console.log(this.score);
 								this.correct++;
 								if (this.correct >= this.config.cards){
-									let ranking = [];
-									if (localStorage.getItem("Ranking")){
-										console.log(ranking);
-										ranking = JSON.parse(localStorage.getItem("Ranking"));
-										console.log(ranking);
-									}
-									let obj = {id: this.username, punts: this.score};
-									console.log(obj);
-									ranking.push(obj);
-									console.log(ranking);
-									localStorage.setItem("Ranking", JSON.stringify(ranking));
 									alert("You Win with " + this.score + " points.");
 									loadpage("../");
 								}

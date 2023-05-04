@@ -6,19 +6,23 @@
 		<title> My first game - Puntuacions </title>
 	</head>
 	<body>
-		<div id="scores_id">
+		<div id="puntuacions_id">
 			<p class="menu-object" id="title">Top Scores</p>
 			<table>
 				<thead>
 					<tr>
 						<th>Username</th>
 						<th>Score</th>
+						<th>Levels</th>
+						<th>Inici</th>
 					</tr>
 				</thead>
-				
-				<tr>
-					<script>
+				<tr v-for="puntuacio in ranking[0]">
+					<td v-for="element in puntuacio">{{element[puntuacio]}}</td>
+				</tr>
+					<!--<script>
 						var ranking = JSON.parse(localStorage.getItem("Ranking"));
+						console.log(ranking);
 						function compare( a, b ) {
 							if ( a.punts < b.punts ){
 							return 1;
@@ -30,25 +34,24 @@
 						}
 						ranking.sort(compare);
 						function CrearTaula (taula, data){
-							for (i = 0; i < 10; i++){
+							for (let element of data){
 								let row = taula.insertRow();
-								for (key in ranking[i]){
+								for (key in element){
 									let cell = row.insertCell();
-									let text = document.createTextNode(ranking[i][key]);
+									let text = document.createTextNode(element[key]);
 									cell.appendChild(text);
 								}
 							}
 						}
 						console.log(ranking);
 						let table = document.querySelector("table");
-						let data = Object.keys(ranking[0]);
-						CrearTaula(table,data);
+						CrearTaula(table,ranking);
 					</script>
-				</tr>
-			</div>
-		</table>
+				-->
+			</table>
+		</div>
 		<a class="menu-object" href="../">GoToMenu</a>
 	</body>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
-	<script src="../js/load.js"></script>
+	<script src="../js/puntuacio.js"></script>
 </html>
