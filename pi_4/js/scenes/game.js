@@ -22,54 +22,99 @@ class GameScene extends Phaser.Scene {
 		this.load.image('so', '../resources/so.png');
 		this.load.image('tb', '../resources/tb.png');
 		this.load.image('to', '../resources/to.png');
+		this.load.image('save', '../resources/flatLight32.png');
+		this.load.image('save_pres', '../resources/transparentLight32.png')
 		this.items = ['cb','co','sb','so','tb','to']
 	}
 	
-    create (){	
-
-		function barreja() {return Math.random()-0.5;}
-		function score(){
-			
+	save(array){
+		console.log(this.cards);
+		console.log(array);
+		var partida = {
+			"id": this.username,
+			"score": this.score,
+			"correct": this.correct,
+			"config": this.config,
+			"cartes" : array,
+			"dors": [] //array amb objectes, carta, bool mostrar
 		}
-		/*
-		function save(var array[]){
-			{
-				var partida = {
-					"id"=this.username,
-					"score"=this.score,
-					"correct"=this.correct,
-					"config"=this.config,
-					"cartes" = array,
-					"dors"=[] //array amb objectes, carta, bool mostrar
+		var existeix = "";
+		for (var i = 0; i<array.length; i++){
+			//console.log(this.cards.children.entries[i]);
+			var carta = this.cards.children.entries[i];
+			console.log(carta);
+			console.log(partida.dors.id);
+			existeix = partida.dors.findIndex( (element) => element.id == carta.card_id);
+			//console.log(existeix);
+			if (existeix == -1){
+				var actual = {"id": carta.card_id, "fet":!carta.active};
+				partida.dors.push(actual);
+			}
+			else{
+				if (! (!carta.active && partida.dors[existeix].fet)){
+					partida.dors[existeix].fet=false;
 				}
-				for (var i = 0; i<arraycards.length; i++){
-					cartes [i] = 
-				}
+				
 			}
 		}
-		function load(){
-
+		var ArrayPartides = [];
+		if(localStorage.partides){
+			ArrayPartides = JSON.parse(localStorage.partides);
+			if(!Array.isArray(ArrayPartides)) ArrayPartides = [];
 		}
-		*/
+		ArrayPartides.push(partida);
+		localStorage.partides = JSON.stringify(ArrayPartides);
+		console.log(partida);
+		alert("Partida guardada com a \"" + this.username);
+		loadpage("../");
+	};
+
+	load(){
+		print("jaja");
+	}
+
+
+    create (){	
+		console.log(this.username);
+
+		function load(){
+			print("jaja");
+		}
+
+		//creació del buto save		
+		var mig = 400;
+		this.add.image(mig, 400, 'save_pres');
+		var guardar = this.add.image(mig, 400, 'save');
+		guardar.setInteractive();
+	
 		console.log(this.config)
 		console.log(this.config.cards)
-		let arraycards = [];
+		var arraycards = [];
 		arraycards=this.items.slice();
 		arraycards=Phaser.Utils.Array.Shuffle(arraycards)
 		arraycards = arraycards.slice(0,this.config.cards);
 		arraycards = arraycards.concat(arraycards);
-		arraycards=Phaser.Utils.Array.Shuffle(arraycards)
-		console.log(arraycards.length)
+		arraycards=Phaser.Utils.Array.Shuffle(arraycards)	
+		
+		guardar.on('pointerup', () =>{
+			guardar.destroy();
+			guardar=null;
+			this.save(arraycards);
+		})
+
+		//console.log(arraycards.length)
 		for (var i = 0; i<arraycards.length; i++){
 			Phaser.Utils.Array.Add(this.current_card,{done: false, texture: 'back'});
 		}
-		var mig = 400;
+
 		var x = mig - (this.config.cards * 100) + 50;
 		this.cards = this.physics.add.staticGroup();
 		for (var i = 0; i<arraycards.length; i++){
 			this.add.image(x,300,arraycards[i])
 			x += 100;
 		}
+		
+
 		console.log(this.config.dificulty)
 		if (this.config.dificulty === "easy"){
 			this.time = 3000;
@@ -83,10 +128,11 @@ class GameScene extends Phaser.Scene {
 			this.time = 2000;
 			this.penalti = 20;
 		} 
-		console.log(this.time)
-		console.log(this.penalti)
+		console.log(this.time);
+		console.log(this.penalti);
 		var mostrar = false
 		setTimeout(() => {
+			console.log(this.cards)
 			x = mig - (this.config.cards * 100) + 50;
 			for (var i = 0; i<arraycards.length; i++){
 				this.cards.create(x, 300, 'back');
@@ -95,13 +141,13 @@ class GameScene extends Phaser.Scene {
 			i = 0;
 			var anterior = null
 			this.cards.children.iterate((card)=>{
-				console.log(card.card_id)
+				//console.log(card.card_id)
 				card.card_id = arraycards[i];
 				//console.log(card.card_id)
 				i++;
 				card.setInteractive();
 				card.on('pointerup', () => {
-					console.log(card.active);
+					console.log(this.cards);
 					if (!mostrar){
 						if (this.firstClick){
 							if (this.firstClick.card_id !== card.card_id){
@@ -111,7 +157,7 @@ class GameScene extends Phaser.Scene {
 								//console.log(this.firstClick);
 								anterior = this.firstClick;
 								setTimeout(() => {
-									console.log(card.active);
+									console.log(this.cards);
 									anterior.enableBody(false, 0, 0, true, true);
 									card.enableBody(false, 0, 0, true, true);
 									mostrar = false;
@@ -137,7 +183,7 @@ class GameScene extends Phaser.Scene {
 							this.firstClick = card;	
 						}
 						 card.disableBody(true,true);
-						 console.log(card.active);
+						 console.log(this.cards);
 						//console.log(card);
 					}			
 				}, card);
@@ -146,7 +192,7 @@ class GameScene extends Phaser.Scene {
 		this.cameras.main.setBackgroundColor(0xBFFCFF);		
 		//console.log(this.cards);
 	}
-	
+
 	update (){	}
 }
 

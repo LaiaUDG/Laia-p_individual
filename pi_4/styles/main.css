@@ -18,6 +18,29 @@ input[type=number]{
 
 }
 
+.doble_fila{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.una_fila{
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	text-align: center;
+}
+
+.save-object{
+	display:block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 350px;
+	height: 75px;
+	font-size: 16px;
+	margin-top: 10px;
+}
+
 .menu-object{
 	display:block;
 	margin-left: auto;
