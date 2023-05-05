@@ -32,11 +32,17 @@ class GameScene extends Phaser.Scene {
 			
 		}
 		/*
-		function save(){
+		function save(var array[]){
 			{
-				id = this.username;
-				var cartes = []// array.cards --> copiarem parelles de cartes 
-				for (var i = 0; i<this.cards.length; i++){
+				var partida = {
+					"id"=this.username,
+					"score"=this.score,
+					"correct"=this.correct,
+					"config"=this.config,
+					"cartes" = array,
+					"dors"=[] //array amb objectes, carta, bool mostrar
+				}
+				for (var i = 0; i<arraycards.length; i++){
 					cartes [i] = 
 				}
 			}
@@ -95,20 +101,22 @@ class GameScene extends Phaser.Scene {
 				i++;
 				card.setInteractive();
 				card.on('pointerup', () => {
+					console.log(card.active);
 					if (!mostrar){
 						if (this.firstClick){
 							if (this.firstClick.card_id !== card.card_id){
 								this.score -= this.penalti;
 								mostrar = true;
-								console.log(this.score);
-								console.log(this.firstClick);
+								//console.log(this.score);
+								//console.log(this.firstClick);
 								anterior = this.firstClick;
 								setTimeout(() => {
+									console.log(card.active);
 									anterior.enableBody(false, 0, 0, true, true);
 									card.enableBody(false, 0, 0, true, true);
 									mostrar = false;
 								}, this.time);		
-								console.log(mostrar)
+								//console.log(mostrar);
 								if (this.score <= 0){
 									alert("Game Over");
 									loadpage("../");
@@ -128,14 +136,15 @@ class GameScene extends Phaser.Scene {
 							console.log("No firstClick")
 							this.firstClick = card;	
 						}
-						card.disableBody(true,true);
-						console.log()
+						 card.disableBody(true,true);
+						 console.log(card.active);
+						//console.log(card);
 					}			
 				}, card);
 			});
 		}, this.time);			
 		this.cameras.main.setBackgroundColor(0xBFFCFF);		
-		
+		//console.log(this.cards);
 	}
 	
 	update (){	}
