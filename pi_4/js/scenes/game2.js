@@ -26,6 +26,8 @@ class GameScene extends Phaser.Scene {
 		this.load.image('tb', '../resources/tb.png');
 		this.load.image('to', '../resources/to.png');
 		this.items = ['cb','co','sb','so','tb','to'];
+		this.load.image('save', '../resources/flatLight32.png');
+		this.load.image('save_pres', '../resources/transparentLight32.png')
 		this.Dificultat = () => {
 			if (this.config.dificulty === "easy"){
 				this.time = 3000;
@@ -43,25 +45,66 @@ class GameScene extends Phaser.Scene {
 		this.Dificultat();
 		console.log(this.config.dificulty)
 	}
-	
-    create (){	
-		function score(){
-			
+
+	save(array){
+		//console.log(this.cards);
+		//console.log(array);
+		var partida = {
+			"id": this.username,
+			"score": this.score,
+			"punts":this.punts,
+			"penalti":this.penalti,
+			"temps":this.time,
+			"cartes":this.num_cartes,
+			"nivells":this.nivell,
+			"correct": this.correct,
+			"config": this.config,
+			"cartes" : array,
+			"dors": [] //array amb objectes, carta, bool mostrar
 		}
-		/*
-		function save(){
-			{
-				id = this.username;
-				var cartes = []// array.cards --> copiarem parelles de cartes 
-				for (var i = 0; i<this.cards.length; i++){
-					cartes [i] = 
+		var existeix = "";
+		for (var i = 0; i<array.length; i++){
+			//console.log(this.cards.children.entries[i]);
+			var carta = this.cards.children.entries[i];
+			//console.log(carta);
+			//console.log(partida.dors.id);
+			existeix = partida.dors.findIndex( (element) => element.id == carta.card_id);
+			//console.log(existeix);
+			if (existeix == -1){
+				var actual = {"id": carta.card_id, "fet":!carta.active};
+				partida.dors.push(actual);
+			}
+			else{
+				if (! (!carta.active && partida.dors[existeix].fet)){
+					partida.dors[existeix].fet=false;
 				}
+				
 			}
 		}
-		function load(){
-
+		console.log(partida);
+		var ArrayPartides = [];
+		if(localStorage.getItem("partides2")){
+			ArrayPartides = JSON.parse(localStorage.partides2);
+			if(!Array.isArray(ArrayPartides)) ArrayPartides = [];
 		}
-		*/
+		ArrayPartides.push(partida);
+		localStorage.setItem("partides2", JSON.stringify(ArrayPartides)); 
+		console.log(partida);
+		//alert("Partida guardada com a \"" + this.username);
+		//loadpage("../");
+	};
+
+	load(){
+
+	}
+	
+    create (){	
+		var mig = 400;
+		this.add.image(mig, 500, 'save_pres');
+		var guardar = this.add.image(mig, 500, 'save');
+		guardar.setInteractive();
+
+
 		let arraycards = [];
 		arraycards=this.items.slice();
 		arraycards=Phaser.Utils.Array.Shuffle(arraycards);
@@ -71,7 +114,15 @@ class GameScene extends Phaser.Scene {
 		for (var i = 0; i<arraycards.length; i++){
 			Phaser.Utils.Array.Add(this.current_card,{done: false, texture: 'back'});
 		}
-		var mig = 400;
+		
+		guardar.on('pointerup', () =>{
+			guardar.visible = false;
+			setTimeout(()=> {
+				guardar.visible =true;
+			}, 250)
+			this.save(arraycards);
+		})
+
 		var y = 234;
 		var x = mig - (this.num_cartes/2 * 100) + 50;
 		this.cards = this.physics.add.staticGroup();
