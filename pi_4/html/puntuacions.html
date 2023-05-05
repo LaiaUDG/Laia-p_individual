@@ -11,14 +11,17 @@
 			<table>
 				<thead>
 					<tr>
-						<th class="menu-object">Username</th>
-						<th class="menu-object">Score</th>
-						<th class="menu-object">Levels</th>
-						<th class="menu-object">Inici</th>
+						<th class="table_header">Username</th>
+						<th class="table_header">Score</th>
+						<th class="table_header">Levels</th>
+						<th class="table_header"s>Inici</th>
 					</tr>
 				</thead>
-				<tr v-for="puntuacio in ranking[0]">
-					<td v-for="element in puntuacio">{{element[puntuacio]}}</td>
+				<tr v-for="puntuacio in ranking">
+					<td> {{puntuacio.id}} </td>
+					<td> {{puntuacio.punts}} </td>
+					<td> {{puntuacio.nivell}} </td>
+					<td> {{puntuacio.inici}} </td>
 				</tr>
 					<!--<script>
 						var ranking = JSON.parse(localStorage.getItem("Ranking"));
