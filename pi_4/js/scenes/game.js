@@ -77,10 +77,6 @@ class GameScene extends Phaser.Scene {
     create (){	
 		console.log(this.username);
 
-		function load(){
-			print("jaja");
-		}
-
 		//creació del buto save		
 		var mig = 400;
 		this.add.image(mig, 400, 'save_pres');

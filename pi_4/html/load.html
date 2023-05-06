@@ -11,7 +11,7 @@
 				<div class="una_fila">
 					<p id="title">Save files from Single game</p>
 					<div v-for="(save, indx) in saves" >
-						<button class="menu-object" v-on:click="load(indx)"> 
+						<button class="menu-object" v-on:click="load(indx,1)"> 
 							{{save.id}} 
 						</button>
 					</div> 
@@ -19,7 +19,7 @@
 				<div class="una_fila">
 					<p id="title">Save files from Endless game</p>
 					<div v-for="(save,indx) in saves2" class="una_fila">
-						<button class="menu-object" v-on:click="load(indx)">
+						<button class="menu-object" v-on:click="load(indx,2)">
 							{{save.id}}
 						</button>
 					</div>

@@ -61,7 +61,7 @@ var gameObj = function (){
 					alert('Error:', error);
 					this.local_save();
 				});
-			},
+			}, 
 			local_save: function(){
 				let partida = {
 					username: this.username,

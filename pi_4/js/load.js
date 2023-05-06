@@ -23,9 +23,16 @@ var load_obj = function(){
 			enrere: function(){
 				loadpage("../");
 			},
-			load: function(i){
-				sessionStorage.idPartida = i;
-				loadpage("../html/game.html");
+			load: function(i,joc){
+				if(joc == 1){
+					sessionStorage.idPartida = i;
+					loadpage("../html/phasergame.html");
+				}
+				else if (joc == 2){
+					sessionStorage.idPartida = i;
+					loadpage("../html/phasergame2.html");
+				}
+				
 			}
 		}
 	});
