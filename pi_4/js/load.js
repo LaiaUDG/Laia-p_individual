@@ -29,7 +29,7 @@ var load_obj = function(){
 					loadpage("../html/phasergame.html");
 				}
 				else if (joc == 2){
-					sessionStorage.idPartida = i;
+					sessionStorage.idPartida2 = i;
 					loadpage("../html/phasergame2.html");
 				}
 				

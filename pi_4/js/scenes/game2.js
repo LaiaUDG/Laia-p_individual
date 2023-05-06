@@ -18,7 +18,7 @@ class GameScene extends Phaser.Scene {
     }
 
     preload (){	
-		this.username = sessionStorage.getItem("username","unknown");
+		this.username = sessionStorage.getItem("username2","unknown");
 		this.load.image('back', '../resources/back.png');
 		this.load.image('cb', '../resources/cb.png');
 		this.load.image('co', '../resources/co.png');
@@ -29,10 +29,13 @@ class GameScene extends Phaser.Scene {
 		this.items = ['cb','co','sb','so','tb','to'];
 		this.load.image('save', '../resources/flatLight32.png');
 		this.load.image('save_pres', '../resources/transparentLight32.png')
-		if (sessionStorage.idPartida && localStorage.partides2){
+		if (sessionStorage.idPartida2 && localStorage.partides2){
 			let arraypartides = JSON.parse(localStorage.partides2);
-			if (sessionStorage.idPartida < arraypartides.length)
-				this.l_partida = arraypartides[sessionStorage.idPartida];
+			if (sessionStorage.idPartida2 < arraypartides.length){
+				this.l_partida = arraypartides[sessionStorage.idPartida2];
+				sessionStorage.idPartida2=null;
+			}
+				
 		}
 		console.log(this.l_partida);
 		this.Dificultat = () => {
@@ -171,20 +174,6 @@ class GameScene extends Phaser.Scene {
 				}
 				else{y=234;}
 				this.cards.create(x, y, 'back');
-				/*
-				if (this.l_partida){
-					console.log(this.l_partida);
-					console.log(arraycards[i]);
-					let existeix = this.l_partida.dors.findIndex( (element) => element.id == arraycards[i]);
-					if (existeix != -1){
-						console.log(existeix);
-						console.log(this.l_partida.dors[existeix].fet);
-						if (!this.l_partida.dors[existeix].fet){
-							card.disableBody(true,true);
-						}
-					}
-				}
-				*/
 				x += 100;
 			}
 			i = 0;

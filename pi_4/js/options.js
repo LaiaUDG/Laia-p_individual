@@ -9,6 +9,8 @@ var options = function(){
 	var load = function(){
 		var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
 		options_data = JSON.parse(json);
+		var json2 = localStorage.getItem("config2");
+		options_data2 = JSON.parse(json2);
 	};
 	var save = function(){
 		localStorage.setItem("config", JSON.stringify(options_data));

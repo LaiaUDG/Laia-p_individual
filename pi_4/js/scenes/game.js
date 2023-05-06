@@ -1,6 +1,7 @@
 class GameScene extends Phaser.Scene {
     constructor (){
         super('GameScene');
+		this.l_partida = null;
 		this.username = '';
 		this.cards = null;
 		this.firstClick = null;
@@ -25,6 +26,14 @@ class GameScene extends Phaser.Scene {
 		this.load.image('save', '../resources/flatLight32.png');
 		this.load.image('save_pres', '../resources/transparentLight32.png')
 		this.items = ['cb','co','sb','so','tb','to']
+		if (sessionStorage.idPartida && localStorage.partides){
+			let arraypartides = JSON.parse(localStorage.partides);
+			if (sessionStorage.idPartida < arraypartides.length){
+				this.l_partida = arraypartides[sessionStorage.idPartida];
+				sessionStorage.idPartida=null;
+			}
+				
+		}
 	}
 	
 	save(array){
@@ -82,15 +91,22 @@ class GameScene extends Phaser.Scene {
 		this.add.image(mig, 400, 'save_pres');
 		var guardar = this.add.image(mig, 400, 'save');
 		guardar.setInteractive();
-	
-		console.log(this.config)
-		console.log(this.config.cards)
 		var arraycards = [];
-		arraycards=this.items.slice();
-		arraycards=Phaser.Utils.Array.Shuffle(arraycards)
-		arraycards = arraycards.slice(0,this.config.cards);
-		arraycards = arraycards.concat(arraycards);
-		arraycards=Phaser.Utils.Array.Shuffle(arraycards)	
+		console.log(this.l_partida);
+		if (this.l_partida){
+			arraycards = this.l_partida.cartes;
+			this.username = this.l_partida.id;
+			this.score = this.l_partida.score;
+			this.config = this.l_partida.config;
+			this.correct = this.l_partida.correct;
+		}
+		else{
+			arraycards=this.items.slice();
+			arraycards=Phaser.Utils.Array.Shuffle(arraycards);
+			arraycards = arraycards.slice(0,this.config.cards);
+			arraycards = arraycards.concat(arraycards);
+			arraycards=Phaser.Utils.Array.Shuffle(arraycards);
+		}
 		
 		guardar.on('pointerup', () =>{
 			guardar.destroy();
@@ -106,11 +122,10 @@ class GameScene extends Phaser.Scene {
 		var x = mig - (this.config.cards * 100) + 50;
 		this.cards = this.physics.add.staticGroup();
 		for (var i = 0; i<arraycards.length; i++){
-			this.add.image(x,300,arraycards[i])
+			this.add.image(x,300,arraycards[i]);
 			x += 100;
 		}
 		
-
 		console.log(this.config.dificulty)
 		if (this.config.dificulty === "easy"){
 			this.time = 3000;
@@ -128,7 +143,6 @@ class GameScene extends Phaser.Scene {
 		console.log(this.penalti);
 		var mostrar = false
 		setTimeout(() => {
-			console.log(this.cards)
 			x = mig - (this.config.cards * 100) + 50;
 			for (var i = 0; i<arraycards.length; i++){
 				this.cards.create(x, 300, 'back');
@@ -139,11 +153,19 @@ class GameScene extends Phaser.Scene {
 			this.cards.children.iterate((card)=>{
 				//console.log(card.card_id)
 				card.card_id = arraycards[i];
-				//console.log(card.card_id)
+				if (this.l_partida){
+					let existeix = this.l_partida.dors.findIndex( (element) => element.id == arraycards[i]);
+					if (existeix != -1){
+						console.log(existeix);
+						console.log(this.l_partida.dors[existeix].fet);
+						if (this.l_partida.dors[existeix].fet){
+							card.disableBody(true,true);
+						}
+					}
+				}
 				i++;
 				card.setInteractive();
 				card.on('pointerup', () => {
-					console.log(this.cards);
 					if (!mostrar){
 						if (this.firstClick){
 							if (this.firstClick.card_id !== card.card_id){
@@ -153,7 +175,6 @@ class GameScene extends Phaser.Scene {
 								//console.log(this.firstClick);
 								anterior = this.firstClick;
 								setTimeout(() => {
-									console.log(this.cards);
 									anterior.enableBody(false, 0, 0, true, true);
 									card.enableBody(false, 0, 0, true, true);
 									mostrar = false;
@@ -179,7 +200,6 @@ class GameScene extends Phaser.Scene {
 							this.firstClick = card;	
 						}
 						 card.disableBody(true,true);
-						 console.log(this.cards);
 						//console.log(card);
 					}			
 				}, card);

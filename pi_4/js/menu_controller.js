@@ -33,7 +33,7 @@ var menu = function(){
 		},
 		phaser_game2: function() {
 			name = prompt("User name");
-			sessionStorage.setItem("username", name);
+			sessionStorage.setItem("username2", name);
 			loadpage("./html/phasergame2.html");
 		},
 		exit: function() {
