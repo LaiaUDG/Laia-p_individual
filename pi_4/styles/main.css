@@ -7,8 +7,30 @@ input[type=number]{
 }
 
 #title{
-	font-size: 26px;
-	line-height: 75px;
+	width: 26.25rem;
+	font-size: 2rem;
+	line-height: 4.5rem;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+#subtitle{
+	width: 26.25rem;
+	font-size: 1.625rem;
+	line-height: 4.5rem;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+body{
+	background-color: rgb(222, 231, 238);
+}
+
+label, p{
+	font-family: 'Courier New', Courier, monospace;
+}
+
+#indicador {
+	font-size: 1.125rem;
+	font-weight: bold;
 }
 
 #Jocs{
@@ -17,6 +39,29 @@ input[type=number]{
 	justify-content: space-between;
 
 }
+
+.table_header{
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	font-size: 1.5rem;
+	font-weight: normal;
+	align-items: center;
+	width: 25rem;
+}
+
+td {
+	margin-top: 0.5rem;
+	background-color: white;
+	padding: 0.5px;
+	text-align: center;
+	border-bottom: 0.125rem solid #68a8db;
+}
+
+table{
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 
 .doble_fila{
 	display: flex;
@@ -35,44 +80,54 @@ input[type=number]{
 .save-object{
 	display:block;
 	margin-left: auto;
-	margin-right: auto;
-	width: 350px;
-	height: 75px;
-	font-size: 16px;
-	margin-top: 10px;
+	margin-right:n auto;
+	width: 21.875rem;
+	height: 4.688rem;
+	font-size: 1rem;
+	margin-top: 0.625rem;
 }
 
 .menu-object{
 	display:block;
 	margin-left: auto;
 	margin-right: auto;
-	width: 300px;
-	height: 75px;
-	font-size: 16px;
-	margin-top: 10px;
+	width: 18.75rem;
+	height: 4.688rem;
+	font-size: 1rem;
+	margin-top: 0.625rem;
 }
 
 #sub-boto{
-	width: 140px;
-	height: 75px;
-	font-size: 16px;
+	width: 8.75rem;
+	height: 4.688 rem;
+	font-size: 1rem;
+	margin: auto;
 }
 
 
+
+button.menu-object{
+	background-color: white;
+	border-style: grove;
+	border-color: grey;
+}
 
 p{
 	text-align: center;
 }
 
 button.menu-object:active{
-	font-size: 18px;
-	width: 275px;
-	height: 70px;
+	font-size: 1.125rem;
+	width: 17.188rem;
+	height: 4.375rem;
+	background-color: white;
 }
 
 button.menu-object:hover:not(:active){
-	font-size: 22px;
-	width: 325px;
-	height: 85px;
+	font-size: 1.375rem;
+	width: 20.313rem;
+	height: 5.313rem;
+	background-color: white;
+	border-width: 0.313rem;
 }
 

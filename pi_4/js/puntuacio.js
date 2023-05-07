@@ -15,6 +15,11 @@ var puntuacions = function(){
             this.ranking = arrayranking;
             console.log(this.ranking);
         },
+        methods:{
+            exit: function(){
+				loadpage("../");
+			}
+        },
     })
     return {};
 }();

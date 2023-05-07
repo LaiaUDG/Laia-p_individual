@@ -75,7 +75,6 @@ class GameScene extends Phaser.Scene {
 		//console.log(array);
 		console.log(this.penalti);
 		var partida = {
-			
 			"id": this.username,
 			"score": this.score,
 			"punts":this.punts,

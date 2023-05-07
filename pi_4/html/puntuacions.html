@@ -11,10 +11,10 @@
 			<table>
 				<thead>
 					<tr>
-						<th class="table_header">Username</th>
+						<th class="table_header" >Username</th>
 						<th class="table_header">Score</th>
-						<th class="table_header">Levels</th>
-						<th class="table_header"s>Inici</th>
+						<th class="table_header" >Levels</th>
+						<th class="table_header" >Inici</th>
 					</tr>
 				</thead>
 				<tr v-for="puntuacio in ranking">
@@ -23,37 +23,10 @@
 					<td> {{puntuacio.nivell}} </td>
 					<td> {{puntuacio.inici}} </td>
 				</tr>
-					<!--<script>
-						var ranking = JSON.parse(localStorage.getItem("Ranking"));
-						console.log(ranking);
-						function compare( a, b ) {
-							if ( a.punts < b.punts ){
-							return 1;
-							}
-							if ( a.punts > b.punts ){
-							return -1;
-							}
-							return 0;
-						}
-						ranking.sort(compare);
-						function CrearTaula (taula, data){
-							for (let element of data){
-								let row = taula.insertRow();
-								for (key in element){
-									let cell = row.insertCell();
-									let text = document.createTextNode(element[key]);
-									cell.appendChild(text);
-								}
-							}
-						}
-						console.log(ranking);
-						let table = document.querySelector("table");
-						CrearTaula(table,ranking);
-					</script>
-				-->
 			</table>
+			<button class="menu-object" v-on:click="exit">GoToMenu</a>
 		</div>
-		<a class="menu-object" href="../">GoToMenu</a>
+		
 	</body>
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 	<script src="../js/puntuacio.js"></script>

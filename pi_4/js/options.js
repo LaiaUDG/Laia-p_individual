@@ -9,7 +9,7 @@ var options = function(){
 	var load = function(){
 		var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
 		options_data = JSON.parse(json);
-		var json2 = localStorage.getItem("config2");
+		var json2 = localStorage.getItem("config2")|| '{"dificulty":"normal"}	';
 		options_data2 = JSON.parse(json2);
 	};
 	var save = function(){
@@ -46,9 +46,15 @@ var options = function(){
 			save: function(){
 				options_data.cards = this.num;
 				options_data.dificulty = this.dificulty;
+				console.log(this.Sdificulty);
+				console.log(options_data2);
 				options_data2.dificulty = this.Sdificulty;
+				console.log(this.dificulty);
 				save();
 				loadpage("../");
+			},
+			exit: function(){
+				loadpage("/..");
 			}
 		}
 	});
