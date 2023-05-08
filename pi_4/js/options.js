@@ -52,9 +52,6 @@ var options = function(){
 				console.log(this.dificulty);
 				save();
 				loadpage("../");
-			},
-			exit: function(){
-				loadpage("/..");
 			}
 		}
 	});

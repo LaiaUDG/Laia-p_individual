@@ -72,7 +72,7 @@ class GameScene extends Phaser.Scene {
 			if(!Array.isArray(ArrayPartides)) ArrayPartides = [];
 			else{
 				var actual = ArrayPartides.findIndex( (element) => element.id == this.username);
-				if (actual != 1){
+				if (actual != -1){
 					ArrayPartides[actual]=partida;
 				}
 				else{
