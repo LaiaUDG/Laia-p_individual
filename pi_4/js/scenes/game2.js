@@ -89,12 +89,8 @@ class GameScene extends Phaser.Scene {
 		}
 		var existeix = "";
 		for (var i = 0; i<array.length; i++){
-			//console.log(this.cards.children.entries[i]);
 			var carta = this.cards.children.entries[i];
-			//console.log(carta);
-			//console.log(partida.dors.id);
 			existeix = partida.dors.findIndex( (element) => element.id == carta.card_id);
-			//console.log(existeix);
 			if (existeix == -1){
 				var actual = {"id": carta.card_id, "fet":!carta.active};
 				partida.dors.push(actual);
@@ -111,8 +107,19 @@ class GameScene extends Phaser.Scene {
 		if(localStorage.getItem("partides2")){
 			ArrayPartides = JSON.parse(localStorage.partides2);
 			if(!Array.isArray(ArrayPartides)) ArrayPartides = [];
+			else{
+				var actual = ArrayPartides.findIndex( (element) => element.id == this.username);
+				if (actual != -1){
+					ArrayPartides[actual]=partida;
+				}
+				else{
+					ArrayPartides.push(partida);
+				}
+			}
 		}
-		ArrayPartides.push(partida);
+		else{
+			ArrayPartides.push(partida);
+		}
 		localStorage.setItem("partides2", JSON.stringify(ArrayPartides)); 
 		console.log(partida);
 		alert("Partida guardada com a \"" + this.username);

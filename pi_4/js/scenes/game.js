@@ -70,8 +70,19 @@ class GameScene extends Phaser.Scene {
 		if(localStorage.partides){
 			ArrayPartides = JSON.parse(localStorage.partides);
 			if(!Array.isArray(ArrayPartides)) ArrayPartides = [];
+			else{
+				var actual = ArrayPartides.findIndex( (element) => element.id == this.username);
+				if (actual != 1){
+					ArrayPartides[actual]=partida;
+				}
+				else{
+					ArrayPartides.push(partida);
+				}
+			}
 		}
-		ArrayPartides.push(partida);
+		else{
+			ArrayPartides.push(partida);
+		}
 		localStorage.partides = JSON.stringify(ArrayPartides);
 		console.log(partida);
 		alert("Partida guardada com a \"" + this.username);
